@@ -25,34 +25,41 @@ export default class MainScene extends Phaser.Scene
     preload () {
         console.log("main preload");
     console.log(this.game.settings);
-        const {content, pallette, canvasPixelDimension, smallImg, largeImg, jitter} = this.game.settings;
+        const {content, pallette, canvasPixelDimension, smallImg, largeImg, jitter, motifData} = this.game.settings;
         
         this.smallImg = smallImg;
         this.largeImg = largeImg;
         this.jitter = jitter;
+        this.motifData = {...motifData, currentIndex:0}; // adding currentIndex here, could probably add it initially
 
         this.canvasPixelDimension = canvasPixelDimension;
 
         // create an array of the unique characters in this poem (use uppercase only)
+        // @TODO can this be simplified using Set as with motifs below
         const uniqueCharacters = Helpers.getCharacterCodeArray(Helpers.unique_char(content.toUpperCase()));
 
         this.load.path = `images/${pallette}/`;
         
         // load the color chits for each of the characters being used and key them on the upper case ascii code for later use
+        // note: character image name example "65.png" (where 65 is the ascii code for the cap of that letter)
         uniqueCharacters.map(
             (letter, idx) => {
                 this.load.image({ key: letter.toString(), });
             }
         );
         
-        const totalBurch = 7;
-        for(let b=0; b<totalBurch; b++) {
-        this.load.image({ key: `burch_${b}`, });
-        }
+        // check motif pattern, and load necessary images
+        // note: motif image name example "burch_0.png" (where "burch_" is motifData.prefix and "0" is coming from the motifData.pattern array)
+        const uniqueMotifItems = [...new Set(motifData.pattern)];
+        uniqueMotifItems.map(
+            (item, idx) => {
+                this.load.image({ key: `${motifData.prefix}${item}`, });
+            }
+        );
 
     }
 
-    create ()
+    create () 
     {
         console.log("main create");
 
@@ -136,24 +143,46 @@ export default class MainScene extends Phaser.Scene
         const isPunct = Helpers.isPunctuation(ltr);
 
         this.rotation = 0; //reset rotation
-        let burchMark
+
+        let motifItem // formerly burchMark
+        
+        const {prefix, pattern} = this.motifData;
         
         if(isPunct){
+
+            // initially was doing some random motifs specifically based on punctuation type
+            // rather than that will want to try basing motifs on a strict pattern so that
+            // there will be parity across renders of the same text
+
+            // Randomized Motif Code
+
+            /*
+            // 46 = .  39 = '
             if(charCode===46 || charCode===39) { 
-                this.rotation = -0.5+(Math.random()*1);
-                const randomBurchMark = `burch_${Math.floor(Math.random()*4)}`;
-                burchMark = this.add.image(this.imgX+roffX, this.imgY+roffY, randomBurchMark).setOrigin(0,0);
-                this.burchLayer.add(burchMark);
+                const thisMotif = `${this.motifData.prefix}${Math.floor(Math.random()*4)}`;
             }
+            // 44 = ,
             if(charCode===44) { 
-                const randomBurchMark = `burch_${Math.floor(Math.random()*3)+3}`;
-                this.rotation = -0.5+(Math.random()*1);
-                burchMark = this.add.image(this.imgX+roffX, this.imgY+roffY, randomBurchMark).setOrigin(0,0);
-                this.burchLayer.add(burchMark);
+                const thisMotif = `${this.motifData.prefix}${Math.floor(Math.random()*3)+3}`;
             }
+            */
+
+            // Sequential Motif Code
+            const thisMotif = `${prefix}${pattern[this.motifData.currentIndex]}`;
+
+            this.motifData.currentIndex++
+            if(this.motifData.currentIndex > pattern.length-1) this.motifData.currentIndex = 0;
             
-                thisLetter.opacityEnd = .5*this.opacity;
-                this.topLayer.add(thisLetter);
+            console.log(`thisMotif: ${thisMotif}`);
+
+            // Common to Random and Sequential
+            motifItem = this.add.image(this.imgX+roffX, this.imgY+roffY, thisMotif).setOrigin(0,0);
+                        
+            this.burchLayer.add(motifItem);
+                
+            this.rotation = -0.5+(Math.random()*1);
+            thisLetter.opacityEnd = .5*this.opacity;
+            this.topLayer.add(thisLetter);
             
         }else{
             if(charCode===32){
@@ -188,11 +217,11 @@ export default class MainScene extends Phaser.Scene
         thisLetter.alpha = 0;
         thisLetter.blendMode = this.blendMode;
         
-        if(burchMark){
-        burchMark.alpha =0;
-        burchMark.displayWidth = imgSize;
-        burchMark.displayHeight = imgSize;
-        burchMark.blendMode = this.blendMode;
+        if(motifItem){
+        motifItem.alpha =0;
+        motifItem.displayWidth = imgSize;
+        motifItem.displayHeight = imgSize;
+        motifItem.blendMode = this.blendMode;
         }
 
         this.add.tween({
@@ -225,7 +254,7 @@ export default class MainScene extends Phaser.Scene
           });
 
           this.add.tween({
-            targets: [burchMark],
+            targets: [motifItem],
             ease: 'Quad.easeOut',
             duration: transitionTime,
             delay: 0,

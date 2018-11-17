@@ -13,6 +13,8 @@ poems.push( {
   largeImg:200,
   jitter:0,
   pallette: "burch_insect_blur",
+  motifPrefix: "burch_",
+  motifPattern: [0,1,2,3,4,5,6],
   text:
 "Nature's first green is gold, \
 Her hardest hue to hold. \
@@ -32,6 +34,8 @@ poems.push( {
   largeImg:300,
   jitter:1,
   pallette: "burch_insect_blur",
+  motifPrefix: "burch_",
+  motifPattern: [0,1,2,3,4,5,6],
   text:
 "Make a nesting now, a place to which \
 the birds can come, think of Kevin's \
@@ -90,8 +94,8 @@ will always remember."
 
 
 const poem = poems[1];
-const {text, pallette, canvasPixelDimension, smallImg, largeImg, jitter} = poem;
-
+const {text, pallette, canvasPixelDimension, smallImg, largeImg, jitter, motifPrefix, motifPattern} = poem;
+const motifData = {prefix:motifPrefix, pattern:motifPattern};
 class App extends Component {
   render() {
     return (
@@ -104,6 +108,7 @@ class App extends Component {
           smallImg={smallImg}
           largeImg={largeImg}
           jitter={jitter}
+          motifData={motifData}
           />
         
         <div className='ccbox'>

@@ -26,12 +26,12 @@ export default class PhaserContainer extends React.Component {
 
     componentDidMount(){
 
-        const {canvasPixelDimension, content, pallette, smallImg, largeImg, jitter} = this.props;
+        const {canvasPixelDimension, content, pallette, smallImg, largeImg, jitter, motifData} = this.props;
 
         config.width = canvasPixelDimension.width;
         config.height = canvasPixelDimension.height;
         this.game = new Phaser.Game(config);
-        this.game.settings = {content, pallette, canvasPixelDimension, smallImg, largeImg, jitter};
+        this.game.settings = {content, pallette, canvasPixelDimension, smallImg, largeImg, jitter, motifData};
     }
     
     render(){
