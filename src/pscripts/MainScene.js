@@ -3,13 +3,6 @@ import Phaser from "phaser";
 import * as Helpers from "./Helpers";
 
 
-
-
-const shortPause = 50;
-const longPause = 100;
-
-const transitionTime = 1000;
-
 export default class MainScene extends Phaser.Scene
 {
 
@@ -24,8 +17,8 @@ export default class MainScene extends Phaser.Scene
 
     preload () {
         console.log("main preload");
-    console.log(this.game.settings);
-        const {content, pallette, canvasPixelDimension, smallImg, largeImg, jitter, motifData} = this.game.settings;
+
+        const {content, pallette, canvasPixelDimension, smallImg, largeImg, jitter, motifData, shortPause, longPause, transitionTime} = this.game.settings;
         
         this.smallImg = smallImg;
         this.largeImg = largeImg;
@@ -33,6 +26,10 @@ export default class MainScene extends Phaser.Scene
         this.motifData = {...motifData, currentIndex:0}; // adding currentIndex here, could probably add it initially
 
         this.canvasPixelDimension = canvasPixelDimension;
+
+        this.shortPause = shortPause;
+        this.longPause = longPause;
+        this.transitionTime = transitionTime;
 
         // create an array of the unique characters in this poem (use uppercase only)
         // @TODO can this be simplified using Set as with motifs below
@@ -81,14 +78,14 @@ export default class MainScene extends Phaser.Scene
         this.midLayer = this.add.container(0, 0);
         this.midTwoLayer = this.add.container(0, 0);
         this.topLayer = this.add.container(0, 0);
-        this.burchLayer = this.add.container(0, 0);
+        this.motifLayer = this.add.container(0, 0);
         
         this.midLayer.blendMode = 'SUB';//SUB
         this.midTwoLayer.blendMode = 'NORMAL';
 
         this.topLayer.blendMode = 'ADD';//ADD
 
-        this.burchLayer.blendMode = 'NORMAL';
+        this.motifLayer.blendMode = 'NORMAL';
 
         this.vowelCount = 0;
         this.consCount = 0;
@@ -178,9 +175,9 @@ export default class MainScene extends Phaser.Scene
             // Common to Random and Sequential
             motifItem = this.add.image(this.imgX+roffX, this.imgY+roffY, thisMotif).setOrigin(0,0);
                         
-            this.burchLayer.add(motifItem);
+            this.motifLayer.add(motifItem);
                 
-            this.rotation = -0.5+(Math.random()*1);
+            this.rotation = (-1*this.motifData.rotation)+(Math.random()*(this.motifData.rotation*2));
             thisLetter.opacityEnd = .5*this.opacity;
             this.topLayer.add(thisLetter);
             
@@ -218,16 +215,16 @@ export default class MainScene extends Phaser.Scene
         thisLetter.blendMode = this.blendMode;
         
         if(motifItem){
-        motifItem.alpha =0;
-        motifItem.displayWidth = imgSize;
-        motifItem.displayHeight = imgSize;
-        motifItem.blendMode = this.blendMode;
+            motifItem.alpha =0;
+            motifItem.displayWidth = imgSize;
+            motifItem.displayHeight = imgSize;
+            motifItem.blendMode = this.blendMode;
         }
 
         this.add.tween({
             targets: [thisLetter],
             ease: 'Quad.easeOut',
-            duration: transitionTime,
+            duration: this.transitionTime,
             delay: 0,
             
             /*
@@ -256,7 +253,7 @@ export default class MainScene extends Phaser.Scene
           this.add.tween({
             targets: [motifItem],
             ease: 'Quad.easeOut',
-            duration: transitionTime,
+            duration: this.transitionTime,
             delay: 0,
             alpha:{
                 getStart: ()=>0,
@@ -288,7 +285,7 @@ export default class MainScene extends Phaser.Scene
            // this.rotation *= 1.25;
         }
 
-        this.timeGap = Helpers.isPunctuation(ltr)  ? longPause : shortPause;
+        this.timeGap = Helpers.isPunctuation(ltr)  ? this.longPause : this.shortPause;
 
         this.charIndex ++;
 
