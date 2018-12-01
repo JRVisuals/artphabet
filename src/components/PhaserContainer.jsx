@@ -6,18 +6,20 @@ import MainScene from "../pscripts/MainScene"
 
 
 let config = {
+    height: 0,
     parent: 'phaser-container',
+    scene: MainScene,
+    transparent: true,
     type: Phaser.AUTO,
     width: 0,
-    height: 0,
-    transparent: true,
+
     physics: {
-        default: 'arcade',
         arcade: {
             gravity: { y: 200 }
-        }
+        },
+        default: 'arcade'
     },
-    scene: MainScene,
+
 
 };
 

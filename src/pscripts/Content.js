@@ -2,8 +2,8 @@ const  Content = [
 
     {
         meta: {
+            author: "Charles E. Burchfgitield",
             title: "Journals, Volume 31",
-            author: "Charles E. Burchfield",
             type: "Journal",
         },
 
@@ -56,8 +56,8 @@ const  Content = [
 
     {
         meta: {
-            title: "Nothing Gold Can Stay",
             author: "Robert Frost",
+            title: "Nothing Gold Can Stay",
             type: "Poem",
         },
 
@@ -91,8 +91,8 @@ const  Content = [
 
     {
         meta: {
-            title: "Coleman's Bed",
             author: "David Whyte",
+            title: "Coleman's Bed",
             type: "Poem",
         },
 

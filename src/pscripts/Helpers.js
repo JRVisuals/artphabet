@@ -1,4 +1,4 @@
-const unique_char = (str1) =>
+const uniqueCharacters = (str1) =>
 {
  const str=str1;
  let uniql="";
@@ -56,4 +56,4 @@ const isVowel = (str) => {
     return isVowel
 }
 
-export { unique_char, getCharacterCodeArray, isPunctuation, isVowel}
+export { uniqueCharacters, getCharacterCodeArray, isPunctuation, isVowel}

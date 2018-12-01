@@ -4,16 +4,24 @@
   "private": true,
   "dependencies": {
     "phaser": "^3.14.0",
-    "react": "^16.5.2",
-    "react-dom": "^16.5.2",
+    "react": "^16.6.3",
+    "react-dom": "^16.6.3",
     "react-redux": "^5.0.7",
     "react-scripts": "1.1.5",
-    "redux": "^4.0.1"
+    "redux": "^4.0.1",
+    "react-scripts-ts": "3.1.0"
+  },
+  "devDependencies": {
+    "@types/jest": "^23.3.10",
+    "@types/node": "^10.12.11",
+    "@types/react": "^16.7.11",
+    "@types/react-dom": "^16.0.11",
+    "typescript": "^3.2.1"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "start": "react-scripts-ts start",
+    "build": "react-scripts-ts build",
+    "test": "react-scripts-ts test --env=jsdom",
+    "eject": "react-scripts-ts eject"
   }
 }

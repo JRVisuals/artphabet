@@ -33,7 +33,7 @@ export default class MainScene extends Phaser.Scene
 
         // create an array of the unique characters in this poem (use uppercase only)
         // @TODO can this be simplified using Set as with motifs below
-        const uniqueCharacters = Helpers.getCharacterCodeArray(Helpers.unique_char(content.toUpperCase()));
+        const uniqueCharacters = Helpers.getCharacterCodeArray(Helpers.uniqueCharacters(content.toUpperCase()));
 
         this.load.path = `images/${pallette}/`;
         
@@ -106,7 +106,9 @@ export default class MainScene extends Phaser.Scene
             
             if(ready) {
                 this.updateAndPaint();
-                if(this.charIndex >= this.content.length) this.paintComplete();
+                if(this.charIndex >= this.content.length) {
+                    this.paintComplete();
+                }
             }
 
         }
@@ -168,7 +170,9 @@ export default class MainScene extends Phaser.Scene
             const thisMotif = `${prefix}${pattern[this.motifData.currentIndex]}`;
 
             this.motifData.currentIndex++
-            if(this.motifData.currentIndex > pattern.length-1) this.motifData.currentIndex = 0;
+            if(this.motifData.currentIndex > pattern.length-1) {
+                this.motifData.currentIndex = 0;
+            }
             
             console.log(`thisMotif: ${thisMotif}`);
 
@@ -205,7 +209,9 @@ export default class MainScene extends Phaser.Scene
 
         let imgSize = isUpper ? this.largeImg : this.smallImg;
         
-        if(isPunct) imgSize = imgSize * 2;
+        if(isPunct) {
+            imgSize = imgSize * 2;
+        }
 
        // if(isUpper & isVowel) { imgSize = imgSize * 4; this.upperVowel++; }
 
