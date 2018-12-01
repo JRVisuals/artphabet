@@ -2,6 +2,60 @@ const  Content = [
 
     {
         meta: {
+            title: "Journals, Volume 31",
+            author: "Charles E. Burchfield",
+            type: "Journal",
+        },
+
+        rendering: {
+            canvasPixelDimension:{width:1200, height:650},
+            smallImg:75,
+            largeImg:150,
+            jitter:10,
+            pallette: "burch_insect_blur",
+            motifPrefix: "burch_",
+            motifPattern: [0,1,2,3],
+            motifRotation: 1
+        },
+
+        timing: {
+            shortPause: 50,
+            longPause: 100,
+            transitionTime: 500,
+        },
+
+        text:
+            "A dream – Working someplace to the north of here; \
+            a channel like depression in the earth with a few woods; \
+            a trolley line took us home at night, in my spare time I painted having brought my materials along; \
+            one I sketched was the weird setting sun thru the doorway of a deserted house. \
+            Towards evening when everyone seemed getting ready to go home, \
+            I noticed in the hot yellow afterglow; bluebirds clinging to an old board fence; \
+            they seemed asleep and I was able to pick them off and put them in my pocket. \
+            Thunder was heard rumbling; in the gathering gloom I noticed a kite in the sky, \
+            then more & more appeared. It seemed as if the boys flying them had lost control of them [as] the strings sagged low over the earth. \
+            I was able to gather them all together in my hand. \
+            The kites were falling, I gave the string a jerk and stepped back a few paces; \
+            they spring up in the air again radiating from my hand; \
+            I was considering whether to tie all the strings together for a joke when the six o’clock car whistled.  \
+            It seemed as if my duty was to see that all left the place on time, and that I myself, \
+            the last to leave had to catch the car in the rain.  \
+            Then I remembered that I had left my sketching material on the ground somewhere.  \
+            The sketches I had removed from the portfolio and laid in some swamp grass, \
+            the portfolio in some bushes.  \
+            On finding the latter it was submerged in water a few inches; \
+            anxious, I sought the sketches only to find them entirely covered with water.  \
+            I lifted them carefully out; \
+            the one of the sunset had been soaked and the paint partly transfigured & the back of another.  \
+            By this time of course the car was gone & I had the prospects of waiting an hour; \
+            but now I saw that a young man from town had his car with him. \
+            [Though] I had never asked him, still I asked him to take me home with him. \
+            He consented but was waiting for his mother-in-law to come.  \
+            The dream broke off here –",            
+        },
+
+    {
+        meta: {
             title: "Nothing Gold Can Stay",
             author: "Robert Frost",
             type: "Poem",
