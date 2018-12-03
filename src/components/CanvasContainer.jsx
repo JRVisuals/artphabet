@@ -23,8 +23,7 @@ let config = {
 
 };
 
-export default class PhaserContainer extends React.Component {
-
+export default class CanvasContainer extends React.Component {
 
     componentDidMount(){
 

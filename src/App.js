@@ -1,23 +1,12 @@
 import React, { Component } from 'react';
-import './App.css';
 
-import PhaserContainer from './components/PhaserContainer';
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+
+import CanvasContainer from './components/CanvasContainer';
 import Captions from './components/Captions';
 import Content from './pscripts/Content';
 
-
-const contentData = Content[2];
-
-// Information about this piece
-const {meta} = contentData;
-// The actual text content of the piece
-const {text} = contentData;
-// Various items pertinent to rendering of the piece
-const {pallette, canvasPixelDimension, smallImg, largeImg, jitter, motifPrefix, motifPattern, motifRotation} = contentData.rendering;
-// More rendering bits, specific to the motif elements
-const motifData = {prefix:motifPrefix, pattern:motifPattern, rotation:motifRotation};
-// Timing bits
-const {shortPause, longPause, transitionTime} = contentData.timing;
+import './App.css';
 
 class App extends Component {
 
@@ -25,29 +14,99 @@ class App extends Component {
 
     return (
 
-      <div className='App'>
+      <Router>
 
-        <PhaserContainer 
-          canvasPixelDimension={canvasPixelDimension}
-          content={text}
-          pallette={pallette}
-          smallImg={smallImg}
-          largeImg={largeImg}
-          jitter={jitter}
-          motifData={motifData}
-          shortPause={shortPause}
-          longPause={longPause}
-          transitionTime={transitionTime}
-          />
-        
-        <div className='ccbox'>
-          <Captions cwidth={700}></Captions>
+        <div className='App'>
+
+          <Route path="/:id" component={CanvasContent}/>
+          <Route exact path="/" component={Menu}/>
+          
         </div>
-
-      </div>
+        
+      </Router>
 
     );
   }
 }
 
+
+const Menu = () => {
+    
+  const Listing = Object.keys(Content).map( 
+    (contentItem, idx) => {
+      return(
+        <div>
+          <p>
+          <strong key={idx}>
+            {idx+1}. <Link to={`/${contentItem}`}> {Content[contentItem].meta.title}</Link>
+          </strong>
+            <br/><span>by {Content[contentItem].meta.author}</span>
+            <br/><span>Pallette source <em>{Content[contentItem].meta.pallette}</em> by {Content[contentItem].meta.artist}</span>
+          </p>
+        </div>
+      )
+    }
+  )
+
+  return(
+    <div>
+      <h2>Golden Words</h2>
+      {Listing}
+    </div>
+  )
+
+};
+
+
+const CanvasContent = ({ match }) => {
+
+  if (!(match.params.id in Content)) {
+    return (
+      <div>
+        <h3>Content Not Found</h3>
+        <p style={{color:'red'}}>{match.params.id}</p>
+      </div>
+    )
+  }
+
+  const contentData = Content[match.params.id];
+
+  // Information about this piece
+  const {meta} = contentData;
+  // The actual text content of the piece
+  const {text} = contentData;
+  // Various items pertinent to rendering of the piece
+  const {pallette, canvasPixelDimension, smallImg, largeImg, jitter, motifPrefix, motifPattern, motifRotation} = contentData.rendering;
+  // More rendering bits, specific to the motif elements
+  const motifData = {prefix:motifPrefix, pattern:motifPattern, rotation:motifRotation};
+  // Timing bits
+  const {shortPause, longPause, transitionTime} = contentData.timing;
+
+  return(
+    <div>
+
+      <CanvasContainer 
+              canvasPixelDimension={canvasPixelDimension}
+              content={text}
+              pallette={pallette}
+              smallImg={smallImg}
+              largeImg={largeImg}
+              jitter={jitter}
+              motifData={motifData}
+              shortPause={shortPause}
+              longPause={longPause}
+              transitionTime={transitionTime}
+              />
+            
+      <div className='ccbox'>
+        <Captions cwidth={700}></Captions>
+      </div>
+
+    </div>
+  )
+  
+}
+
+
 export default App;
+

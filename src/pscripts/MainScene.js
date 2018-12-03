@@ -41,7 +41,7 @@ export default class MainScene extends Phaser.Scene
         // note: character image name example "65.png" (where 65 is the ascii code for the cap of that letter)
         uniqueCharacters.map(
             (letter, idx) => {
-                console.log(letter);
+                //console.log(letter);
                 this.load.image({ key: letter.toString(), });
             }
         );

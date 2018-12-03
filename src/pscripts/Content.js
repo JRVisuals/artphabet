@@ -1,14 +1,16 @@
-const  Content = [
+const  Content = {
 
-    {
+    journal_hills:{
         meta: {
-            author: "Charles E. Burchfgitield",
+            author: "Charles E. Burchfield",
             title: "Journals, Volume 31",
             type: "Journal",
+            pallette: "Late Afternoon in the Hills",
+            artist: "Charles E. Burchfield"
         },
 
         rendering: {
-            canvasPixelDimension:{width:1300, height:650},
+            canvasPixelDimension:{width:1300, height:800},
             smallImg:100,
             largeImg:200,
             jitter:2,
@@ -54,11 +56,13 @@ const  Content = [
             The dream broke off here –",            
         },
 
-    {
+    poem_staygold:{
         meta: {
             author: "Robert Frost",
             title: "Nothing Gold Can Stay",
             type: "Poem",
+            pallette: "The Insect Chorus",
+            artist: "Charles E. Burchfield"
         },
 
         rendering: {
@@ -89,15 +93,17 @@ const  Content = [
             Nothing gold can stay.",            
         },
 
-    {
+    poem_colemansbed: {
         meta: {
             author: "David Whyte",
             title: "Coleman's Bed",
             type: "Poem",
+            pallette: "The Insect Chorus",
+            artist: "Charles E. Burchfield"
         },
 
         rendering: {
-            canvasPixelDimension:{width:1400, height:750},
+            canvasPixelDimension:{width:1400, height:785},
             smallImg:150,
             largeImg:300,
             jitter:1,
@@ -167,7 +173,7 @@ const  Content = [
             that your future happiness \
             will always remember."            
         }
-];
+    };
 
 export default Content
 
