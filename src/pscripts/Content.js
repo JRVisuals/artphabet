@@ -8,20 +8,20 @@ const  Content = [
         },
 
         rendering: {
-            canvasPixelDimension:{width:1200, height:650},
-            smallImg:75,
-            largeImg:150,
-            jitter:10,
-            pallette: "burch_insect_blur",
-            motifPrefix: "burch_",
-            motifPattern: [0,1,2,3],
-            motifRotation: 1
+            canvasPixelDimension:{width:1300, height:650},
+            smallImg:100,
+            largeImg:200,
+            jitter:2,
+            pallette: "burch_hills_blur",
+            motifPrefix: "hills_",
+            motifPattern: [0,0,0,0,1],
+            motifRotation: .25
         },
 
         timing: {
-            shortPause: 50,
-            longPause: 100,
-            transitionTime: 500,
+            shortPause: 10,
+            longPause: 50,
+            transitionTime: 250,
         },
 
         text:

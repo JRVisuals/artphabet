@@ -41,6 +41,7 @@ export default class MainScene extends Phaser.Scene
         // note: character image name example "65.png" (where 65 is the ascii code for the cap of that letter)
         uniqueCharacters.map(
             (letter, idx) => {
+                console.log(letter);
                 this.load.image({ key: letter.toString(), });
             }
         );
@@ -174,7 +175,7 @@ export default class MainScene extends Phaser.Scene
                 this.motifData.currentIndex = 0;
             }
             
-            console.log(`thisMotif: ${thisMotif}`);
+            //console.log(`thisMotif: ${thisMotif}`);
 
             // Common to Random and Sequential
             motifItem = this.add.image(this.imgX+roffX, this.imgY+roffY, thisMotif).setOrigin(0,0);
@@ -182,7 +183,7 @@ export default class MainScene extends Phaser.Scene
             this.motifLayer.add(motifItem);
                 
             this.rotation = (-1*this.motifData.rotation)+(Math.random()*(this.motifData.rotation*2));
-            thisLetter.opacityEnd = .5*this.opacity;
+            thisLetter.opacityEnd = .75*this.opacity;
             this.topLayer.add(thisLetter);
             
         }else{
