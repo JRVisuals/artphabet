@@ -11,9 +11,9 @@ const  Content = {
 
         rendering: {
             canvasPixelDimension:{width:1300, height:800},
-            smallImg:100,
+            smallImg:125,
             largeImg:200,
-            jitter:2,
+            jitter:5,
             pallette: "burch_hills_blur",
             motifPrefix: "hills_",
             motifPattern: [0,0,0,0,1],

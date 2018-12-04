@@ -10,7 +10,7 @@ let config = {
     parent: 'phaser-container',
     scene: MainScene,
     transparent: true,
-    type: Phaser.AUTO,
+    type: Phaser.CANVAS,
     width: 0,
 
     physics: {

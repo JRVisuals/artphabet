@@ -73,21 +73,23 @@ export default class MainScene extends Phaser.Scene
         this.blendMode = 'NORMAL';
         this.rotation = 0;
         
-        this.bottomLayer = this.add.container(0, 0);
+        // Layers in Order
+        this.consonantLayer = this.add.container(0, 0);
+        this.vowelLayer = this.add.container(0, 0);  
+        this.spaceLayer = this.add.container(0, 0);     
 
-        
-        this.midLayer = this.add.container(0, 0);
-        this.midTwoLayer = this.add.container(0, 0);
-        this.topLayer = this.add.container(0, 0);
+        this.motifBlendLayer = this.add.container(0, 0);
         this.motifLayer = this.add.container(0, 0);
-        
-        this.midLayer.blendMode = 'SUB';//SUB
-        this.midTwoLayer.blendMode = 'NORMAL';
+           
+        // Layer Blend Modes
+        this.consonantLayer.blendMode = Phaser.BlendModes.NORMAL;
+        this.vowelLayer.blendMode = Phaser.BlendModes.NORMAL;
+        this.spaceLayer.blendMode = Phaser.BlendModes.ADD;
 
-        this.topLayer.blendMode = 'ADD';//ADD
+        this.motifBlendLayer.blendMode = Phaser.BlendModes.ADD;
+        this.motifLayer.blendMode = Phaser.BlendModes.NORMAL;
 
-        this.motifLayer.blendMode = 'NORMAL';
-
+        // Stats - because why not?
         this.vowelCount = 0;
         this.consCount = 0;
         this.upperVowelCount = 0;
@@ -150,23 +152,6 @@ export default class MainScene extends Phaser.Scene
         
         if(isPunct){
 
-            // initially was doing some random motifs specifically based on punctuation type
-            // rather than that will want to try basing motifs on a strict pattern so that
-            // there will be parity across renders of the same text
-
-            // Randomized Motif Code
-
-            /*
-            // 46 = .  39 = '
-            if(charCode===46 || charCode===39) { 
-                const thisMotif = `${this.motifData.prefix}${Math.floor(Math.random()*4)}`;
-            }
-            // 44 = ,
-            if(charCode===44) { 
-                const thisMotif = `${this.motifData.prefix}${Math.floor(Math.random()*3)+3}`;
-            }
-            */
-
             // Sequential Motif Code
             const thisMotif = `${prefix}${pattern[this.motifData.currentIndex]}`;
 
@@ -184,24 +169,21 @@ export default class MainScene extends Phaser.Scene
                 
             this.rotation = (-1*this.motifData.rotation)+(Math.random()*(this.motifData.rotation*2));
             thisLetter.opacityEnd = .75*this.opacity;
-            this.topLayer.add(thisLetter);
+            this.motifBlendLayer.add(thisLetter);
             
         }else{
             if(charCode===32){
-                thisLetter.opacityEnd = .75*this.opacity;
-                this.midLayer.add(thisLetter);
+                thisLetter.opacityEnd = .25*this.opacity;
+                this.spaceLayer.add(thisLetter);
             }else{
-
-                //thisLetter.opacityEnd = .85*this.opacity;
-                //this.bottomLayer.add(thisLetter);
                     
                 if(isVowel){
                     thisLetter.opacityEnd = .85*this.opacity;
-                    this.bottomLayer.add(thisLetter);
+                    this.vowelLayer.add(thisLetter);
                     this.vowelCount ++;
                 }else{
                     thisLetter.opacityEnd = .85*this.opacity;
-                    this.bottomLayer.add(thisLetter);
+                    this.consonantLayer.add(thisLetter);
                     this.consCount ++;
                 } 
                 
