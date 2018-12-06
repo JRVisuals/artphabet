@@ -148,7 +148,7 @@ export default class MainScene extends Phaser.Scene
 
         let motifItem // formerly burchMark
         
-        const {prefix, pattern} = this.motifData;
+        const {prefix, pattern, } = this.motifData;
         
         if(isPunct){
 
@@ -195,6 +195,7 @@ export default class MainScene extends Phaser.Scene
         if(isPunct) {
             imgSize = imgSize * 2;
         }
+        
 
        // if(isUpper & isVowel) { imgSize = imgSize * 4; this.upperVowel++; }
 
@@ -205,9 +206,10 @@ export default class MainScene extends Phaser.Scene
         
         if(motifItem){
             motifItem.alpha =0;
-            motifItem.displayWidth = imgSize;
-            motifItem.displayHeight = imgSize;
+            motifItem.displayWidth = this.motifData.size;
+            motifItem.displayHeight = this.motifData.size;
             motifItem.blendMode = this.blendMode;
+            console.log(imgSize);
         }
 
         this.add.tween({

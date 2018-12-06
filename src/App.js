@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
 import CanvasContainer from './components/CanvasContainer';
 import Captions from './components/Captions';
-import Content from './pscripts/Content';
+import Content from './pscripts/Content.ts';
 
 import './App.css';
 
@@ -76,9 +76,9 @@ const CanvasContent = ({ match }) => {
   // The actual text content of the piece
   const {text} = contentData;
   // Various items pertinent to rendering of the piece
-  const {pallette, canvasPixelDimension, smallImg, largeImg, jitter, motifPrefix, motifPattern, motifRotation} = contentData.rendering;
+  const {pallette, canvasPixelDimension, smallImg, largeImg, jitter, motifPrefix, motifPattern, motifRotation, motifSize} = contentData.rendering;
   // More rendering bits, specific to the motif elements
-  const motifData = {prefix:motifPrefix, pattern:motifPattern, rotation:motifRotation};
+  const motifData = {prefix: motifPrefix, pattern: motifPattern, rotation: motifRotation, size: motifSize};
   // Timing bits
   const {shortPause, longPause, transitionTime} = contentData.timing;
 
