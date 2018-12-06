@@ -1,5 +1,5 @@
 // Type interface for content blocks
-interface IContentBlock {
+export interface IContentBlock {
     meta: {
         author: string,
         title: string,

@@ -1,33 +1,28 @@
-import React, { Component } from 'react';
+import * as React from 'react';
 
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
 import CanvasContainer from './components/CanvasContainer';
 import Captions from './components/Captions';
-import Content from './pscripts/Content.ts';
+import Content, { IContentBlock } from './pscripts/Content';
 
 import './App.css';
 
-class App extends Component {
+class App extends React.Component {
 
   render() {
 
     return (
-
       <Router>
-
         <div className='App'>
-
           <Route path="/:id" component={CanvasContent}/>
           <Route exact path="/" component={Menu}/>
-          
         </div>
-        
       </Router>
 
     );
-  }
-}
+  };
+};
 
 
 const Menu = () => {
@@ -57,8 +52,8 @@ const Menu = () => {
 
 };
 
-
-const CanvasContent = ({ match }) => {
+// @TODO match probably shouldn't be "any"
+const CanvasContent = ({ match }: any) => {
 
   if (!(match.params.id in Content)) {
     return (
@@ -69,7 +64,7 @@ const CanvasContent = ({ match }) => {
     )
   }
 
-  const contentData = Content[match.params.id];
+  const contentData: IContentBlock = Content[match.params.id];
 
   // Information about this piece
   const {meta} = contentData;

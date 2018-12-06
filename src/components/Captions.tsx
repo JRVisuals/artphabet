@@ -1,19 +1,12 @@
-import React from "react"
-import PropTypes from 'prop-types';
+import * as React from "react"
+import { number } from 'prop-types';
 
-const propTypes = {
-    cwidth: PropTypes.number,
+interface IProps {
+    cwidth?: number;
 };
 
-const defaultProps = {
-    cwidth: 800,
-};
 
-export default class Captions extends React.Component {
-
-    constructor(props) {
-        super(props);
-    }
+export default class Captions extends React.Component < IProps, object> {
 
     // @TODO how do we expose this component's state to the Phaser scene in order to avoid setting the innerHTML via element reference -- or is this not even a problem?
 

@@ -1,4 +1,4 @@
-import Phaser from "phaser";
+import * as Phaser from "phaser";
 
 import * as Helpers from "./Helpers";
 
@@ -6,9 +6,41 @@ import * as Helpers from "./Helpers";
 export default class MainScene extends Phaser.Scene
 {
 
-    constructor ()
+    private settings: CanvasSettings;
+    private motifCurrentIndex: number= 0;
+
+    private content: string= '';
+
+    private charIndex: number= 0;
+    private inProgress: boolean= true;
+    private timeGap: number= 50;
+    private lastTime: number= Date.now();
+    private imgX: number= 0;
+    private imgY: number= 0;
+    private opacity:number = 1;
+    private rotation:number= 0;
+    
+    // Layers in Order
+    private consonantLayer: Phaser.GameObjects.Container;
+    private vowelLayer: Phaser.GameObjects.Container;  
+    private spaceLayer: Phaser.GameObjects.Container;     
+    private motifBlendLayer: Phaser.GameObjects.Container;
+    private motifLayer: Phaser.GameObjects.Container;
+        
+    // Stats - because why not?
+    private vowelCount:number = 0;
+    private consCount:number = 0;
+    private upperVowelCount:number = 0;
+
+    // Caption Specific
+    private capElement: HTMLDivElement = document.getElementById('captions') as HTMLDivElement;
+    private capMaxChar:number = 44;
+    private capCurrentChar:number = 0;
+
+    constructor (settings: CanvasSettings)
     {
         super({ key: 'MainScene', active: true });
+        this.settings = settings;
     }
 
     boot () {
@@ -18,29 +50,19 @@ export default class MainScene extends Phaser.Scene
     preload () {
         console.log("main preload");
 
-        const {content, pallette, canvasPixelDimension, smallImg, largeImg, jitter, motifData, shortPause, longPause, transitionTime} = this.game.settings;
-        
-        this.smallImg = smallImg;
-        this.largeImg = largeImg;
-        this.jitter = jitter;
-        this.motifData = {...motifData, currentIndex:0}; // adding currentIndex here, could probably add it initially
-
-        this.canvasPixelDimension = canvasPixelDimension;
-
-        this.shortPause = shortPause;
-        this.longPause = longPause;
-        this.transitionTime = transitionTime;
+    
+        this.motifCurrentIndex= 0;
 
         // create an array of the unique characters in this poem (use uppercase only)
         // @TODO can this be simplified using Set as with motifs below
-        const uniqueCharacters = Helpers.getCharacterCodeArray(Helpers.uniqueCharacters(content.toUpperCase()));
+        const uniqueCharacters = Helpers.getCharacterCodeArray(Helpers.uniqueCharacters(this.settings.content.toUpperCase()));
 
-        this.load.path = `images/${pallette}/`;
+        this.load.path = `images/${this.settings.pallette}/`;
         
         // load the color chits for each of the characters being used and key them on the upper case ascii code for later use
         // note: character image name example "65.png" (where 65 is the ascii code for the cap of that letter)
         uniqueCharacters.map(
-            (letter, idx) => {
+            (letter: number, idx: number) => {
                 //console.log(letter);
                 this.load.image({ key: letter.toString(), });
             }
@@ -48,6 +70,7 @@ export default class MainScene extends Phaser.Scene
         
         // check motif pattern, and load necessary images
         // note: motif image name example "burch_0.png" (where "burch_" is motifData.prefix and "0" is coming from the motifData.pattern array)
+        const { motifData } = this.settings;
         const uniqueMotifItems = [...new Set(motifData.pattern)];
         uniqueMotifItems.map(
             (item, idx) => {
@@ -61,26 +84,15 @@ export default class MainScene extends Phaser.Scene
     {
         console.log("main create");
 
-        this.content = this.game.settings.content;
+        this.content = this.settings.content;
 
-        this.charIndex = 0;
-        this.inProgress = true;
-        this.timeGap = 50;
-        this.lastTime = Date.now();
-        this.imgX = 0;
-        this.imgY = 0;
-        this.opacity = 1;
-        this.blendMode = 'NORMAL';
-        this.rotation = 0;
-        
         // Layers in Order
         this.consonantLayer = this.add.container(0, 0);
         this.vowelLayer = this.add.container(0, 0);  
         this.spaceLayer = this.add.container(0, 0);     
-
         this.motifBlendLayer = this.add.container(0, 0);
         this.motifLayer = this.add.container(0, 0);
-           
+
         // Layer Blend Modes
         this.consonantLayer.blendMode = Phaser.BlendModes.NORMAL;
         this.vowelLayer.blendMode = Phaser.BlendModes.NORMAL;
@@ -89,16 +101,9 @@ export default class MainScene extends Phaser.Scene
         this.motifBlendLayer.blendMode = Phaser.BlendModes.ADD;
         this.motifLayer.blendMode = Phaser.BlendModes.NORMAL;
 
-        // Stats - because why not?
-        this.vowelCount = 0;
-        this.consCount = 0;
-        this.upperVowelCount = 0;
-
         // @TODO probably a better way to communicate w/ caption component - is context available from here?
-        this.capElement = document.getElementById('captions');
         this.capElement.innerHTML='';
-        this.capMaxChar = 44;
-        this.capCurrentChar = 0;
+
     }
 
     update ()
@@ -129,15 +134,16 @@ export default class MainScene extends Phaser.Scene
     }
 
 
-    paintLetter(ltr){
+    paintLetter(ltr: string){
 
-        const charCode = ltr.charCodeAt();
+        const charCode = ltr.charCodeAt(0);
         const letterUpper = ltr.toUpperCase();
-        const charCodeUpper = letterUpper.charCodeAt();
+        const charCodeUpper = letterUpper.charCodeAt(0);
 
         const isUpper = charCode<=90 && charCode>=65;
 
-        const roffX = (10*this.jitter) - Math.floor(Math.random()*(20*this.jitter));
+        const { jitter } = this.settings;
+        const roffX = (10*jitter) - Math.floor(Math.random()*(20*jitter));
         const roffY = 0; //10 - Math.floor(Math.random()*20);
         const thisLetter = this.add.image(this.imgX+roffX, this.imgY+roffY, charCodeUpper.toString()).setOrigin(0,0);
         
@@ -146,18 +152,20 @@ export default class MainScene extends Phaser.Scene
 
         this.rotation = 0; //reset rotation
 
-        let motifItem // formerly burchMark
+        let motifItem: Phaser.GameObjects.Image | undefined; // formerly burchMark
+        let letterOpacityEnd: number;
         
-        const {prefix, pattern, } = this.motifData;
+        const { motifData } = this.settings
+        const {prefix, pattern, } = motifData;
         
         if(isPunct){
 
             // Sequential Motif Code
-            const thisMotif = `${prefix}${pattern[this.motifData.currentIndex]}`;
+            const thisMotif = `${prefix}${pattern[this.motifCurrentIndex]}`;
 
-            this.motifData.currentIndex++
-            if(this.motifData.currentIndex > pattern.length-1) {
-                this.motifData.currentIndex = 0;
+            this.motifCurrentIndex++
+            if(this.motifCurrentIndex > pattern.length-1) {
+                this.motifCurrentIndex = 0;
             }
             
             //console.log(`thisMotif: ${thisMotif}`);
@@ -167,22 +175,22 @@ export default class MainScene extends Phaser.Scene
                         
             this.motifLayer.add(motifItem);
                 
-            this.rotation = (-1*this.motifData.rotation)+(Math.random()*(this.motifData.rotation*2));
-            thisLetter.opacityEnd = .75*this.opacity;
+            this.rotation = (-1*motifData.rotation)+(Math.random()*(motifData.rotation*2));
+            letterOpacityEnd = .75*this.opacity;
             this.motifBlendLayer.add(thisLetter);
             
         }else{
             if(charCode===32){
-                thisLetter.opacityEnd = .25*this.opacity;
+                letterOpacityEnd = .25*this.opacity;
                 this.spaceLayer.add(thisLetter);
             }else{
                     
                 if(isVowel){
-                    thisLetter.opacityEnd = .85*this.opacity;
+                    letterOpacityEnd = .85*this.opacity;
                     this.vowelLayer.add(thisLetter);
                     this.vowelCount ++;
                 }else{
-                    thisLetter.opacityEnd = .85*this.opacity;
+                    letterOpacityEnd = .85*this.opacity;
                     this.consonantLayer.add(thisLetter);
                     this.consCount ++;
                 } 
@@ -190,7 +198,7 @@ export default class MainScene extends Phaser.Scene
             }
         }
 
-        let imgSize = isUpper ? this.largeImg : this.smallImg;
+        let imgSize = isUpper ? this.settings.largeImg : this.settings.smallImg;
         
         if(isPunct) {
             imgSize = imgSize * 2;
@@ -202,20 +210,19 @@ export default class MainScene extends Phaser.Scene
         thisLetter.displayWidth = imgSize;
         thisLetter.displayHeight = imgSize;
         thisLetter.alpha = 0;
-        thisLetter.blendMode = this.blendMode;
+        thisLetter.blendMode = Phaser.BlendModes.NORMAL;
         
         if(motifItem){
             motifItem.alpha =0;
-            motifItem.displayWidth = this.motifData.size;
-            motifItem.displayHeight = this.motifData.size;
-            motifItem.blendMode = this.blendMode;
-            console.log(imgSize);
+            motifItem.displayWidth = motifData.size;
+            motifItem.displayHeight = motifData.size;
+            motifItem.blendMode = Phaser.BlendModes.NORMAL;
         }
 
         this.add.tween({
             targets: [thisLetter],
             ease: 'Quad.easeOut',
-            duration: this.transitionTime,
+            duration: this.settings.transitionTime,
             delay: 0,
             
             /*
@@ -227,7 +234,7 @@ export default class MainScene extends Phaser.Scene
             
             alpha: {
               getStart: () => 0,
-              getEnd: () => thisLetter.opacityEnd
+              getEnd: () => letterOpacityEnd
             },
             /*
             rotation:{
@@ -244,11 +251,11 @@ export default class MainScene extends Phaser.Scene
           this.add.tween({
             targets: [motifItem],
             ease: 'Quad.easeOut',
-            duration: this.transitionTime,
+            duration: this.settings.transitionTime,
             delay: 0,
             alpha:{
                 getStart: ()=>0,
-                getEnd: ()=>1-(thisLetter.opacityEnd*1.75)},
+                getEnd: ()=>1-(letterOpacityEnd*1.75)},
 
             rotation:{
                 getStart: () => 0,
@@ -263,20 +270,18 @@ export default class MainScene extends Phaser.Scene
 
         this.imgX += imgSize/2;
 
-        if(this.imgX + imgSize/2 >= this.canvasPixelDimension.width) {
+        if(this.imgX + imgSize/2 >= this.settings.canvasPixelDimension.width) {
             this.imgX=0;
             this.imgY += imgSize/2;
         }
 
-        if(this.imgY >= this.canvasPixelDimension.height) {
+        if(this.imgY >= this.settings.canvasPixelDimension.height) {
             this.imgX=0; //smallImg*-.5;
             this.imgY=0; //smallImg*-.5;
             this.opacity *= .8;
-            this.blendMode = 'NORMAL';
-           // this.rotation *= 1.25;
         }
 
-        this.timeGap = Helpers.isPunctuation(ltr)  ? this.longPause : this.shortPause;
+        this.timeGap = Helpers.isPunctuation(ltr)  ? this.settings.longPause : this.settings.shortPause;
 
         this.charIndex ++;
 
@@ -286,7 +291,7 @@ export default class MainScene extends Phaser.Scene
 
 
     // @TODO Probably a better way to update the caption using component state?
-    updateCaption(ltr) {
+    updateCaption(ltr: string) {
         //console.log(ltr)
         this.capElement.innerHTML += ltr;
        

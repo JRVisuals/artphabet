@@ -1,4 +1,4 @@
-const uniqueCharacters = (str1) =>
+const uniqueCharacters = (str1: string) =>
 {
  const str=str1;
  let uniql="";
@@ -15,7 +15,7 @@ const uniqueCharacters = (str1) =>
 }  
 
 
-const getCharacterCodeArray = (theString) =>
+const getCharacterCodeArray = (theString: string) =>
 {
 
     const letters = theString.split('');
@@ -27,24 +27,24 @@ const getCharacterCodeArray = (theString) =>
     return mapped;
 }
 
-const getLetterElement = (letter, idx) => {
+const getLetterElement = (letter: string, idx: number) => {
 
     const letterUpper = letter.toUpperCase();
-    const charCodeUpper = letterUpper.charCodeAt();
+    const charCodeUpper = letterUpper.charCodeAt(0);
 
     return charCodeUpper
 
 }
 
-const isPunctuation = (str) => {
-    const charCode = str.charCodeAt();
+const isPunctuation = (str:string) => {
+    const charCode = str.charCodeAt(0);
     const isPunctuation = (charCode>=33 && charCode<=64 ) ? true : false;
     return isPunctuation
 }
 
-const isVowel = (str) => {
+const isVowel = (str:string) => {
     const upperStr = str.toUpperCase();
-    const charCode = upperStr.charCodeAt();
+    const charCode = upperStr.charCodeAt(0);
     const isVowel = (
         charCode===65 ||
         charCode===69 ||
