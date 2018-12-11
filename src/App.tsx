@@ -84,7 +84,7 @@ const CanvasContent = ({ match }: any) => {
   // Timing bits
   const {shortPause, longPause, transitionTime} = contentData.timing;
 
-  const showCaptions = false;
+  const showCaptions = true;
 
   return(
     <div>
