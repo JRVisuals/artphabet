@@ -1,35 +1,6 @@
-// Type interface for content blocks
-export interface IContentBlock {
-    meta: {
-        author: string,
-        title: string,
-        type: string,
-        pallette: string,
-        artist: string,
-    };
 
-    rendering: {
-        canvasPixelDimension: { width: number, height: number},
-        smallImg: number,
-        largeImg: number,
-        jitter: number,
-        pallette: string,
-        motifPrefix: string,
-        motifPattern: number[],
-        motifRotation: number,
-        motifSize: number,
-    };
 
-    timing: {
-        shortPause: number,
-        longPause: number,
-        transitionTime: number,
-    };
-
-    text: string;
-}
-
-// Define individual content blocks
+import IContentBlock from './types';
 
 const journalHillsContent: IContentBlock = {
         meta: {
@@ -44,7 +15,7 @@ const journalHillsContent: IContentBlock = {
             canvasPixelDimension: {width: 1300, height: 800},
             smallImg: 125,
             largeImg: 200,
-            jitter: 5,
+            jitter: 3,
             pallette: "burch_hills_blur",
             motifPrefix: "hills_",
             motifPattern: [0, 0, 0, 0, 1],

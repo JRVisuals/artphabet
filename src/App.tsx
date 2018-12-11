@@ -4,7 +4,10 @@ import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
 import CanvasContainer from './components/CanvasContainer';
 import Captions from './components/Captions';
-import Content, { IContentBlock } from './pscripts/Content';
+
+import IContentBlock from "./content/types";
+
+import Content from './content/StayGold2018';
 
 import './App.css';
 
@@ -46,11 +49,15 @@ const Menu = () => {
   return(
     <div>
       <h2>Golden Words</h2>
+      <h3>A Synesthetic Interpretation of the Dream Journals of Charles E. Burchfield</h3>
       {Listing}
+      <hr/>
+      Show Captions: <input id="captionsCheckbox" type="checkbox" value="captionsOn"/>
     </div>
   )
 
 };
+
 
 // @TODO match probably shouldn't be "any"
 const CanvasContent = ({ match }: any) => {
@@ -77,6 +84,8 @@ const CanvasContent = ({ match }: any) => {
   // Timing bits
   const {shortPause, longPause, transitionTime} = contentData.timing;
 
+  const showCaptions = false;
+
   return(
     <div>
 
@@ -91,17 +100,15 @@ const CanvasContent = ({ match }: any) => {
               shortPause={shortPause}
               longPause={longPause}
               transitionTime={transitionTime}
+              showCaptions={showCaptions}
               />
-            
-      <div className='ccbox'>
-        <Captions cwidth={700}></Captions>
-      </div>
-
+    
     </div>
   )
   
 }
 
+//<Captions cwidth={700} showCaptions={true}/>
 
 export default App;
 

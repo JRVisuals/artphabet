@@ -1,12 +1,14 @@
-import * as Phaser from "phaser";
+import * as Phaser from 'phaser';
 
-import * as Helpers from "./Helpers";
+import * as Helpers from '../helpers/Helpers';
+
+import ICanvasSettings from '../components/CanvasContainer/types';
 
 
 export default class MainScene extends Phaser.Scene
 {
 
-    private settings: CanvasSettings;
+    private settings: ICanvasSettings;
     private motifCurrentIndex: number= 0;
 
     private content: string= '';
@@ -32,12 +34,7 @@ export default class MainScene extends Phaser.Scene
     private consCount:number = 0;
     private upperVowelCount:number = 0;
 
-    // Caption Specific
-    private capElement: HTMLDivElement = document.getElementById('captions') as HTMLDivElement;
-    private capMaxChar:number = 44;
-    private capCurrentChar:number = 0;
-
-    constructor (settings: CanvasSettings)
+    constructor (settings: ICanvasSettings)
     {
         super({ key: 'MainScene', active: true });
         this.settings = settings;
@@ -102,7 +99,7 @@ export default class MainScene extends Phaser.Scene
         this.motifLayer.blendMode = Phaser.BlendModes.NORMAL;
 
         // @TODO probably a better way to communicate w/ caption component - is context available from here?
-        this.capElement.innerHTML='';
+      //  this.capElement.innerHTML='';
 
     }
 
@@ -144,7 +141,7 @@ export default class MainScene extends Phaser.Scene
 
         const { jitter } = this.settings;
         const roffX = (10*jitter) - Math.floor(Math.random()*(20*jitter));
-        const roffY = 0; //10 - Math.floor(Math.random()*20);
+        const roffY = (10*jitter) - Math.floor(Math.random()*(20*jitter));
         const thisLetter = this.add.image(this.imgX+roffX, this.imgY+roffY, charCodeUpper.toString()).setOrigin(0,0);
         
         const isVowel = Helpers.isVowel(ltr);
@@ -275,7 +272,7 @@ export default class MainScene extends Phaser.Scene
             this.imgY += imgSize/2;
         }
 
-        if(this.imgY >= this.settings.canvasPixelDimension.height) {
+        if(this.imgY + imgSize/2  >= this.settings.canvasPixelDimension.height) {
             this.imgX=0; //smallImg*-.5;
             this.imgY=0; //smallImg*-.5;
             this.opacity *= .8;
@@ -285,23 +282,16 @@ export default class MainScene extends Phaser.Scene
 
         this.charIndex ++;
 
-        this.updateCaption(ltr)
+        // Conditionally update captions, why bother if they're not showing
+        if (this.settings.showCaptions) this.updateCaption(ltr)
 
     }
 
 
-    // @TODO Probably a better way to update the caption using component state?
+    
     updateCaption(ltr: string) {
-        //console.log(ltr)
-        this.capElement.innerHTML += ltr;
-       
-        if(this.capCurrentChar>=this.capMaxChar){
-            const trimFirst = this.capElement.innerHTML.substring(1);
-            this.capElement.innerHTML = trimFirst;
-           // this.capCurrentChar = 0;
-        }else{
-            this.capCurrentChar++;
-        }
+    
+        this.settings.setCaptionHandler(ltr);
     }
 }
 

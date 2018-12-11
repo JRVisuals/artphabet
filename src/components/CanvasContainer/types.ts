@@ -1,4 +1,4 @@
-declare type CanvasSettings = {
+export default interface ICanvasSettings {
     canvasPixelDimension: { width: number, height: number };
     content: string;
     pallette: string;
@@ -9,4 +9,6 @@ declare type CanvasSettings = {
     shortPause: number;
     longPause: number;
     transitionTime: number;
+    setCaptionHandler?: any;
+    showCaptions: boolean;
 }
