@@ -12,7 +12,7 @@ const journalHillsContent: IContentBlock = {
         },
 
         rendering: {
-            canvasPixelDimension: {width: 1300, height: 800},
+            canvasPixelDimension: {width: 1550, height: 800},
             smallImg: 125,
             largeImg: 200,
             jitter: 3,
@@ -24,9 +24,9 @@ const journalHillsContent: IContentBlock = {
         },
 
         timing: {
-            shortPause: 10,
-            longPause: 50,
-            transitionTime: 250,
+            shortPause: 150,
+            longPause: 250,
+            transitionTime: 1500,
         },
 
         text:
@@ -70,21 +70,21 @@ const poemStayGold: IContentBlock = {
     },
 
     rendering: {
-        canvasPixelDimension: {width: 500, height: 500},
-        smallImg: 100,
-        largeImg: 150,
+        canvasPixelDimension: {width: 849, height: 800},
+        smallImg: 250,
+        largeImg: 500,
         jitter: 0,
         pallette: "burch_insect_blur",
         motifPrefix: "burch_",
         motifPattern: [4, 5, 6, 6, 6],
-        motifRotation: .25,
-        motifSize: 200,
+        motifRotation: .5,
+        motifSize: 400,
     },
 
     timing: {
-        shortPause: 100,
-        longPause: 300,
-        transitionTime: 1000,
+        shortPause: 150,
+        longPause: 250,
+        transitionTime: 1500,
     },
 
     text:
@@ -108,7 +108,7 @@ const poemColemansBed: IContentBlock = {
     },
 
     rendering: {
-        canvasPixelDimension: { width: 1400, height: 750},
+        canvasPixelDimension: { width: 1550, height: 750},
         smallImg: 150,
         largeImg: 300,
         jitter: 2,
@@ -120,9 +120,9 @@ const poemColemansBed: IContentBlock = {
     },
 
     timing: {
-        shortPause: 10,
-        longPause: 50,
-        transitionTime: 200,
+        shortPause: 150,
+        longPause: 250,
+        transitionTime: 1500,
     },
 
     text:
@@ -180,6 +180,74 @@ const poemColemansBed: IContentBlock = {
         will always remember.",
 };
 
+const poemPatronSaint: IContentBlock = {
+    meta: {
+        author: "Justin Karcher",
+        title: "The Patron Saint of Kids Who Steal Other Kids’ Candy on Halloween",
+        type: "Poem",
+        pallette: "The Insect Chorus",
+        artist: "Charles E. Burchfield",
+    },
+
+    rendering: {
+        canvasPixelDimension: { width: 1550, height: 750},
+        smallImg: 150,
+        largeImg: 300,
+        jitter: 2,
+        pallette: "burch_insect_blur",
+        motifPrefix: "burch_",
+        motifPattern: [0, 4, 1, 5, 3, 4, 5 ],
+        motifRotation: .25,
+        motifSize: 200,
+    },
+
+    timing: {
+        shortPause: 150,
+        longPause: 250,
+        transitionTime: 1500,
+    },
+
+    text:
+        "Little monsters \
+        or maybe kids wearing masks from Party City \
+        running through the ruins of bitter cities \
+        where sometimes there are resurgences, but they never last very long \
+        \
+        bitter cities \
+        where strollers sit abandoned on the steps of art galleries \
+        left behind by new moms \
+        terrified of a world without vividness or sweetness \
+        so they decide to act \
+        plunging into hypnotizing still-life \
+        never to be seen or heard from again \
+        \
+        on quiet nights \
+        when you walk by the darkened or covered windows of art galleries \
+        you can hear babies laughing \
+        swatting at butterflies in impressionistic landscapes \
+        or maybe moms are releasing their woes in expressionistic factories \
+        if catharsis were a color, what would it be? \
+        \
+        these kids \
+        they can’t wait for Halloween \
+        the only day of the year \
+        when the living dead shed their bitter skins \
+        hang amphetamine lights from dirty windows \
+        hand out insignificant candies to kids who feel like they have nothing \
+        of course the kids want more, of course they’ll do anything to get more \
+        of course they’ll beat up other kids for their sweetness \
+        whole lives in plastic bags, whole lives that blow in the wind \
+        of course these kids crave the comfort that kills teeth in the end \
+        \
+        eventually every kid has a bloody nose, maybe some bruised bones \
+        eventually moonlit licorice falls from the night sky like electric ropes \
+        these kids \
+        they rip off their masks and climb up to another world \
+        where they hang out with saints holding babies \
+        and there are lots of butterflies flying around",
+};
+
+
 // Drop content blocks into a content object for export
 const  Content = {
 
@@ -188,6 +256,8 @@ const  Content = {
     poem_staygold: poemStayGold,
 
     poem_colemansbed: poemColemansBed,
+
+    poem_patronsaint: poemPatronSaint,
 
 };
 
