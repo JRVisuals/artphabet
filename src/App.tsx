@@ -49,8 +49,8 @@ const Menu = () => {
   return(
     <div>
       <h2>Golden Words</h2>
-      <h3>A Synesthetic Interpretation of the Dream Journals of Charles E. Burchfield</h3>
-      {Listing}
+      <h3>A Synesthetic Interpretation of the Dream Journals of Charles E. Burchfield<br/>...and other things.</h3>
+        {Listing}
       <hr/>
       Show Captions: <input id="captionsCheckbox" type="checkbox" value="captionsOn"/>
     </div>

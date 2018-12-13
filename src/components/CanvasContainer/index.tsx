@@ -4,7 +4,10 @@ import * as Phaser from 'phaser';
 import ICanvasSettings from './types';
 import MainScene from '../../phaserScenes/MainScene';
 
-import Captions from '../Captions'
+import Captions from '../Captions';
+
+import './styles.css';
+
 
 const initialState = {
     caption: 'Caption Testing Via State',
@@ -15,7 +18,7 @@ type State = Readonly<typeof initialState>
 export default class CanvasContainer extends React.Component< ICanvasSettings, object> {
 
     readonly state: State = initialState;
-    private capMaxChar:number = 44;
+    private capMaxChar:number = 88;
     private capCurrentChar:number = 0;
     private captionString: string = '';
 
@@ -104,7 +107,7 @@ export default class CanvasContainer extends React.Component< ICanvasSettings, o
 
     render(){
         
-        const cwidth = 700;
+        const cwidth = 1000;
         const caption = this.state.caption;
 
         const captionBlock = this.props.showCaptions === true ? <Captions cwidth={cwidth} capText={this.state.caption}/> : <div/>;
@@ -112,6 +115,7 @@ export default class CanvasContainer extends React.Component< ICanvasSettings, o
         return (
 
             <div>
+                <div className="spacer"/>
                 <div className="phaserContainer" id="phaser-container"/>
                 {captionBlock}
             </div>
