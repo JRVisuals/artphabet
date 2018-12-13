@@ -33,6 +33,12 @@ export default class CanvasContainer extends React.Component< ICanvasSettings, o
 
     setCaption  (str:String){
 
+        if(str==="^") {
+            this.captionString="";
+            str="";
+            this.capCurrentChar = 0;
+        }
+
         this.captionString += str;
         if(this.capCurrentChar>=this.capMaxChar){
             const trimFirst = this.captionString.substring(1);

@@ -208,11 +208,11 @@ const poemPatronSaint: IContentBlock = {
     },
 
     text:
-        "Little monsters \
-        or maybe kids wearing masks from Party City \
-        running through the ruins of bitter cities \
-        where sometimes there are resurgences, but they never last very long \
-        \
+        "Little monsters ^\
+        or maybe kids wearing masks from Party City ^\
+        running through the ruins of bitter cities ^\
+        where sometimes there are resurgences, but they never last very long ^\
+        ^\
         bitter cities \
         where strollers sit abandoned on the steps of art galleries \
         left behind by new moms \

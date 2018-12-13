@@ -133,6 +133,14 @@ export default class MainScene extends Phaser.Scene
 
     paintLetter(ltr: string){
 
+        // Conditionally update captions, why bother if they're not showing
+        if (this.settings.showCaptions) this.updateCaption(ltr);
+
+        // swap the return character for a space
+        if(ltr==="^") ltr=" ";
+
+        // process the rest....
+        
         const charCode = ltr.charCodeAt(0);
         const letterUpper = ltr.toUpperCase();
         const charCodeUpper = letterUpper.charCodeAt(0);
@@ -281,9 +289,6 @@ export default class MainScene extends Phaser.Scene
         this.timeGap = Helpers.isPunctuation(ltr)  ? this.settings.longPause : this.settings.shortPause;
 
         this.charIndex ++;
-
-        // Conditionally update captions, why bother if they're not showing
-        if (this.settings.showCaptions) this.updateCaption(ltr)
 
     }
 
