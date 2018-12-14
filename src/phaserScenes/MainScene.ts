@@ -54,7 +54,7 @@ export default class MainScene extends Phaser.Scene
         // @TODO can this be simplified using Set as with motifs below
         const uniqueCharacters = Helpers.getCharacterCodeArray(Helpers.uniqueCharacters(this.settings.content.toUpperCase()));
 
-        this.load.path = `images/${this.settings.pallette}/`;
+        this.load.path = `../images/${this.settings.pallette}/`;
         
         // load the color chits for each of the characters being used and key them on the upper case ascii code for later use
         // note: character image name example "65.png" (where 65 is the ascii code for the cap of that letter)
@@ -137,7 +137,7 @@ export default class MainScene extends Phaser.Scene
         if (this.settings.showCaptions) this.updateCaption(ltr);
 
         // swap the return character for a space
-        if(ltr==="^") ltr=" ";
+        if(ltr==="^") ltr="-";
 
         // process the rest....
         

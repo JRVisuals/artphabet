@@ -11,14 +11,30 @@ import Content from './content/StayGold2018';
 
 import './App.css';
 
+
+const initialState = {
+  showCaps: false,
+}
+type State = Readonly<typeof initialState>
+
 class App extends React.Component {
+
+  constructor(props: any) {
+    super(props)
+
+    this.state = initialState;
+  }
+
+  toggleCaptions = this.setState((prevState, props) => {
+    return { showCaps: false }
+  });
 
   render() {
 
     return (
       <Router>
         <div className='App'>
-          <Route path="/:id" component={CanvasContent}/>
+          <Route path="/:id/:captions" component={CanvasContent}/>
           <Route exact path="/" component={Menu}/>
         </div>
       </Router>
@@ -36,11 +52,14 @@ const Menu = () => {
         <div>
           <p>
           <strong key={idx}>
-            {idx+1}. <Link to={`/${contentItem}`}> {Content[contentItem].meta.title}</Link>
+            {idx+1}. <Link to={`/${contentItem}/0`}> {Content[contentItem].meta.title}</Link>
           </strong>
+          
             <br/><span>by {Content[contentItem].meta.author}</span>
             <br/><span>Pallette source <em>{Content[contentItem].meta.pallette}</em> by {Content[contentItem].meta.artist}</span>
+            <br/><span className="small">(<Link to={`/${contentItem}/1`}>CAPTIONS</Link>)</span>
           </p>
+          
         </div>
       )
     }
@@ -51,16 +70,18 @@ const Menu = () => {
       <h2>Golden Words</h2>
       <h3>A Synesthetic Interpretation of the Dream Journals of Charles E. Burchfield<br/>...and other things.</h3>
         {Listing}
-      <hr/>
-      Show Captions: <input id="captionsCheckbox" type="checkbox" value="captionsOn"/>
+  
+     
     </div>
   )
-
+// Show Captions: <input id="captionsCheckbox" type="checkbox" value="captionsOn"/>
 };
 
 
 // @TODO match probably shouldn't be "any"
 const CanvasContent = ({ match }: any) => {
+
+  console.log(match);
 
   if (!(match.params.id in Content)) {
     return (
@@ -71,7 +92,9 @@ const CanvasContent = ({ match }: any) => {
     )
   }
 
+  const showCaptions: boolean = match.params.captions as boolean;
   const contentData: IContentBlock = Content[match.params.id];
+
 
   // Information about this piece
   const {meta} = contentData;
@@ -84,7 +107,7 @@ const CanvasContent = ({ match }: any) => {
   // Timing bits
   const {shortPause, longPause, transitionTime} = contentData.timing;
 
-  const showCaptions = true;
+  
 
   return(
     <div>
