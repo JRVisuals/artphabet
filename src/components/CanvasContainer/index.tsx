@@ -113,7 +113,7 @@ export default class CanvasContainer extends React.Component< ICanvasSettings, o
 
     render(){
         
-        const cwidth = 1000;
+        const cwidth = 1400;
         const caption = this.state.caption;
 
         console.log(`this.props.showCaptions: ${this.props.showCaptions}`)
