@@ -29,31 +29,6 @@ export default class CanvasContainer extends React.Component< ICanvasSettings, o
         this.setCaption = this.setCaption.bind(this);
       }
 
-
-
-    setCaption  (str:String){
-
-        if(str==="^") {
-            this.captionString="";
-            str="";
-            this.capCurrentChar = 0;
-        }
-
-        this.captionString += str;
-        if(this.capCurrentChar>=this.capMaxChar){
-            const trimFirst = this.captionString.substring(1);
-            this.captionString = trimFirst;
-           // this.capCurrentChar = 0;
-        }else{
-            this.capCurrentChar++;
-        }
-
-
-        this.setState((prevState, props) => {
-            return { caption: this.captionString }
-        });
-    }
-
     componentDidMount() {
 
         const {
@@ -72,7 +47,7 @@ export default class CanvasContainer extends React.Component< ICanvasSettings, o
         
         // could just be const settings = {...this.props}
 
-        // Need to pass these through to the main scene so that the game object has access to them
+        // Settings -> to the phaser game object through the main scene
         const settings = {canvasPixelDimension,
             content,
             pallette,
@@ -111,13 +86,35 @@ export default class CanvasContainer extends React.Component< ICanvasSettings, o
 
     }
 
+    setCaption  (str:String){
+
+        if(str==="^") {
+            this.captionString="";
+            str="";
+            this.capCurrentChar = 0;
+        }
+
+        this.captionString += str;
+        if(this.capCurrentChar>=this.capMaxChar){
+            const trimFirst = this.captionString.substring(1);
+            this.captionString = trimFirst;
+           // this.capCurrentChar = 0;
+        }else{
+            this.capCurrentChar++;
+        }
+
+
+        this.setState((prevState, props) => {
+            return { caption: this.captionString }
+        });
+    }
+
     render(){
         
         const cwidth = 1400;
         const caption = this.state.caption;
 
-        console.log(`this.props.showCaptions: ${this.props.showCaptions}`)
-        const captionBlock = this.props.showCaptions == true ? <Captions cwidth={cwidth} capText={this.state.caption}/> : <div/>;
+        const captionBlock = this.props.showCaptions == true ? <Captions cwidth={cwidth} capText={caption}/> : <div/>;
 
         return (
 

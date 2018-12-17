@@ -2,6 +2,37 @@
 
 import IContentBlock from './types';
 
+const liveReadTest: IContentBlock = {
+    meta: {
+        author: "Your Name Here",
+        title: "Unknown",
+        type: "Live Read",
+        pallette: "The Insect Chorus (1917)",
+        artist: "Charles E. Burchfield",
+    },
+
+    rendering: {
+        canvasPixelDimension: { width: 1850, height: 1100},
+        smallImg: 150,
+        largeImg: 300,
+        jitter: 2,
+        pallette: "burch_insect_blur",
+        motifPrefix: "burch_",
+        motifPattern: [0, 4, 1, 5, 3, 4, 5 ],
+        motifRotation: .25,
+        motifSize: 200,
+    },
+
+    timing: {
+        shortPause: 100,
+        longPause: 350,
+        transitionTime: 2000,
+        
+    },
+
+    text:"",
+};
+
 const journal_volume31: IContentBlock = {
         meta: {
             author: "Charles E. Burchfield",
@@ -303,7 +334,7 @@ const poemHowl: IContentBlock = {
     },
 
     rendering: {
-        canvasPixelDimension: { width: 1850, height: 900},
+        canvasPixelDimension: { width: 1300, height: 800},
         smallImg: 100,
         largeImg: 250,
         jitter: .5,
@@ -405,6 +436,8 @@ const poemHowl: IContentBlock = {
 
 // Drop content blocks into a content object for export
 const  Content = {
+
+    liveRead: liveReadTest,
 
     journal_hills: journal_volume31,
 

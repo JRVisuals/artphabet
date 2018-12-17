@@ -11,7 +11,8 @@
     "react-router-dom": "^4.4.0-beta.6",
     "react-scripts": "^2.1.1",
     "react-scripts-ts": "^4.0.8",
-    "redux": "^4.0.1"
+    "redux": "^4.0.1",
+    "speech-to-text": "^2.9.0"
   },
   "devDependencies": {
     "@types/jest": "^23.3.10",

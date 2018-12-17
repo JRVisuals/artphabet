@@ -6,7 +6,7 @@
     flex: 0 1 auto;
     align-content: center;
     align-items: center;
-    height:50px;
+    height:60px;
     
     background-color: #000000;
     width:100%;
@@ -20,5 +20,5 @@
     
     color: #ccc; /* rgb(250, 212, 0); */
     font-size: 32px;
-    height: 36px;
+    height: 40px;
 }
