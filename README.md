@@ -18,7 +18,7 @@ A generative art project for mapping poetry, prose, and real-time speech into vi
 
 ## Directory Structure
 
-Your basic CRA directory structure.
+Your basic CRA directory structure. In addition...
 
 - `content/` local direcctory for PSD working files l
 - `public/images` contains various image files used to "paint" the final image.
